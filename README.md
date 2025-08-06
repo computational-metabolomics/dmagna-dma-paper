@@ -43,7 +43,7 @@ The repository contains three main analysis workflows:
 3. init the R environment using renv:
 
 ```r
-renv::init()
+renv::restore()
 ```
 
 This will install all required packages with their exact versions as specified in `renv.lock`.
