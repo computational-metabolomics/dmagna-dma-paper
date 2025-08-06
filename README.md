@@ -40,10 +40,10 @@ The repository contains three main analysis workflows:
 
 1. Clone this repository
 2. Open the R project in RStudio: `dmagna-dma-paper.Rproj`
-3. Restore the R environment using renv:
+3. init the R environment using renv:
 
 ```r
-renv::restore()
+renv::init()
 ```
 
 This will install all required packages with their exact versions as specified in `renv.lock`.
