@@ -728,7 +728,7 @@ create_workflow_analysis <- function(df) {
                                                       panel.grid.minor = element_blank())
   
   ggsave("output/FIG_5d_annotations_all_workflow_bar_with_legend.pdf", width=10, height=10)
-  
+
   # Create UpSet plot
   create_upset_plot(workflow_summary3)
 }
@@ -749,9 +749,20 @@ create_upset_plot <- function(workflow_summary) {
                   nintersects=140,
                   sets.bar.color='lightblue',
                   show.numbers=FALSE)
-  print(upsetr)
+  
   pdf('output/FIG_5e_annotations_all_upset.pdf', width=13, height=5)
-  upsetr
+  print(upsetr)
+  dev.off()
+  
+  upsetr <- upset(fromList(dl),mb.ratio = c(0.35, 0.65), 
+                  
+                  order.by = "freq", sets=as.character(unique(workflow_summary$extract_spe_lc)),
+                  nintersects=25,
+                  sets.bar.color='lightblue',
+                  show.numbers='yes')
+  
+  pdf('output/FIG_5e_annotations_all_upsetR_subset_assays_with_numbers.pdf', width=13, height=5)
+  print(upsetr)
   dev.off()
 }
 
