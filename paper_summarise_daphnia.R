@@ -44,18 +44,37 @@ if (!dir.exists(OUTPUT_DIR)) {
 }
 
 # Define color palette ----
-create_color_palette <- function() {
-  colors <- c(
+create_colour_palette <- function() {
+  colours <- c(
     "dodgerblue2", "green4", "#FB9A99", "#6A3D9A", "#FF7F00", 
     "grey70", "gold1", "skyblue2", "#E31A1C", "palegreen2",
     "#CAB2D6", "#FDBF6F", "grey15", "khaki2", "maroon", 
     "orchid1", "deeppink1", "blue1", "steelblue4", "darkturquoise", 
     "green1", "yellow4", "yellow3", "darkorange4", "brown", "grey30"
   )
-  return(gplots::col2hex(colors))
+  colours <- gplots::col2hex(colours)
+  names(colours) <- c("Lipids and lipid-like molecules",
+                      "Organic acids and derivatives",
+                      "Organoheterocyclic compounds",
+                      "Organic oxygen compounds",
+                      "Benzenoids",
+                      "Phenylpropanoids and polyketides",
+                      "Nucleosides, nucleotides, and analogues",
+                      "Organic nitrogen compounds",
+                      "Undefined",
+                      "Organosulfur compounds",
+                      "Hydrocarbons",
+                      "Alkaloids and derivatives",
+                      "Organophosphorus compounds",
+                      "Lignans, neolignans and related compounds",
+                      "Organic Polymers",
+                      "Organic 1,3-dipolar compounds",
+                      "Allenes")
+  
+  return(colours)
 }
 
-c25 <- create_color_palette()
+c25 <- create_colour_palette()
 
 # Utility Functions ----
 
@@ -683,7 +702,7 @@ create_workflow_analysis <- function(df) {
     arrange(desc(n)) 
   
   # use this as the naming category
-  names(c25) <- compound_superclass_count_for_bar$superclass[1:25]
+  #names(c25) <- compound_superclass_count_for_bar$superclass[1:25]
   
   workflow_summary_for_bar <- workflow_summary3
   workflow_summary_for_bar$superclass <- factor(workflow_summary_for_bar$superclass, 
