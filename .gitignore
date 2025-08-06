@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+pubchem_set.sdf
+merged_annotations_all_classified.sdf
+*.log
