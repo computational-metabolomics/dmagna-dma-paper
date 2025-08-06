@@ -21,7 +21,6 @@ suppressPackageStartupMessages({
   library(ape)
   library(aplot)
   library(ggtree)
-  library(tidytree)
   library(stringi)
   library(ggpubr)
   library(data.table)
