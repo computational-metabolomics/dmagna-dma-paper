@@ -136,6 +136,19 @@ load_annotation_data <- function() {
   # Remove unknown compounds
   df <- df[!grepl('UNKNOWN', df$inchikey), ]
   
+  # Remove unknown compounds
+  df <- df[!df$inchikey=="", ]
+  
+  # Remove out any features that were not linked to an xcms blank subtracted
+  # feature (where appropriate)
+  df <- df[df$passed_xcms_blank_filter=="TRUE" | is.na(df$passed_xcms_blank_filter), ]
+  
+  # Can remove DIMSn features as well that have annotations not linked to processed DIMSpy peak
+  # (i.e. mzCloud and GNPS analysis)
+  # However, don't think this as needed as the DDA approach for DIMSn was limited to an inclusion list.
+  # (Reduces the annotations own to 7945 if this is performed) 
+  # df <- df[!((df$galaxybool=="FALSE" & df$measurement=="DIMSn") & (df$mzcloudsmbool == "TRUE" | df$gnpssmbool == "TRUE")), ]
+  
   # Handle infinite values
   df[sapply(df, is.infinite)] <- NA
   
@@ -150,6 +163,38 @@ load_annotation_data <- function() {
 #' @return Summary dataframe grouped by InChI key
 create_compound_summary <- function(df) {
   cat("Creating compound summary by InChI key...\n")
+  
+  # helper function to get representative feature details (only for Galaxy based
+  # annotations. Only include the Galaxy based spectral matching annotations
+  # for MetaboLights
+  pick_representative_value <- function(x, mz, rt, adduct) {
+    base_idx <- which(!is.na(mz) & !is.na(rt) & !is.na(adduct) & adduct != '')
+    if (length(base_idx) == 0 || length(x) == 0) {
+      return(NA)
+    }
+    
+    priority <- c("[M+H]+", "[M-H]-", "[M+Na]+", "[M+NH4]+", "[M+K]+", "[M+Cl]-")
+    priority_idx <- base_idx[adduct[base_idx] %in% priority]
+    if (length(priority_idx) > 0) {
+      adduct_rank <- match(adduct[priority_idx], priority)
+      priority_idx <- priority_idx[order(adduct_rank, priority_idx)]
+      pick_idx <- priority_idx[1]
+    } else {
+      pick_idx <- base_idx[1]
+    }
+    
+    if (pick_idx > length(x)) {
+      return(NA)
+    }
+    val <- x[[pick_idx]]
+    if (length(val) == 0) {
+      return(NA)
+    }
+    if (length(val) > 1) {
+      val <- val[1]
+    }
+    return(val)
+  }
   
   summary_df <- df %>%
     group_by(inchikey) %>%
@@ -185,7 +230,7 @@ create_compound_summary <- function(df) {
       spe_frac_number = toString(sort(unique(spe_frac))),
       spe_frac = toString(sort(unique(spe_frac_full))),
       chromatography = toString(sort(unique(chromatography))),
-      measurement = toString(sort(unique(measurement))),
+      
       polarity = toString(sort(unique(polarity))),
       
       # Annotation methods (boolean flags)
@@ -203,6 +248,17 @@ create_compound_summary <- function(df) {
       # Annotation quality
       match_type = toString(unique(match_type)),
       msi_level = toString(sort(unique(msi_level))),
+
+      # Get representative RT and m/z for annotation feature (used for MetaboLights)
+      representative_mz = pick_representative_value(mz, mz, rt, adduct_overall),
+      representative_rt = pick_representative_value(rt, mz, rt, adduct_overall),
+      representative_adduct = pick_representative_value(adduct_overall, mz, rt, adduct_overall),
+      representative_well = pick_representative_value(well, mz, rt, adduct_overall),
+      representative_assay = pick_representative_value(assay, mz, rt, adduct_overall),
+      representative_measurement = pick_representative_value(measurement, mz, rt, adduct_overall),
+  
+      measurement = toString(sort(unique(measurement))),
+
       .groups = 'drop'
     )
   
@@ -228,7 +284,7 @@ create_factor_summary <- function(df, group_vars) {
     group_by(across(all_of(group_vars_all))) %>%
     summarise(
       compoundname = toString(sort(unique(name))),
-      exact_mass = toString(unique(exact_mass_temp)),
+      exact_mass = toString(unique(exact_mass)),
       match_type = toString(unique(match_type)),
       
       smbool = max(smbool),
@@ -445,7 +501,7 @@ create_pca_plot <- function(summary_df) {
   pca_res <- pca_res_scale_f
   pca_res_summary <- summary(pca_res)
   
-  fp_meta <- merge(data.frame('cid'=rownames(pca_res$x)), compound_summary, by.x='cid', by.y='pubchem_cid', all.x = T,no.dups = T )
+  fp_meta <- merge(data.frame('cid'=rownames(pca_res$x)), summary_df, by.x='cid', by.y='pubchem_cid', all.x = T,no.dups = T )
   
   compound_superclass_count_pca <- fp_meta %>%
     group_by(superclass) %>%
@@ -538,7 +594,7 @@ create_venn_diagrams <- function(summary_df, df_merged_filtered) {
   sirius_compounds <- unique(summary_df[summary_df$siriusbool == 1, ]$inchikey)
   create_venn(sets=list(sm_compounds, mf_compounds, sirius_compounds),
               labels=c("Spectral \n matching", "MetFrag", "SIRIUS \n CSI:FingerID"),
-              "FIG_S8a_annotation_type_venn.pdf",
+              "FIG_S28a_annotation_type_venn.pdf",
               positions = c(-20, 26, 125),
               distances = c(0.055, 0.055, 0.055))
   
@@ -548,7 +604,7 @@ create_venn_diagrams <- function(summary_df, df_merged_filtered) {
   galaxy_compounds <- unique(summary_df[summary_df$galaxysmbool == 1, ]$inchikey)
   create_venn(list(gnps_compounds, mzcloud_compounds, galaxy_compounds),
               c("Spectral matching\n(GNPS workflow)", "Spectral matching\n(mzCloud)", "Spectral matching\n(Galaxy)"),
-              "FIG_S8b_spectral_matching_venn.pdf",
+              "FIG_S28b_spectral_matching_venn.pdf",
               positions = c(-20, 26, 125),
               distances = c(0.055, 0.055, 0.055))
   
@@ -568,7 +624,7 @@ create_venn_diagrams <- function(summary_df, df_merged_filtered) {
   gcms_compounds <- unique(summary_df[grepl('GC', summary_df$measurement), ]$inchikey)
   create_venn(list(lcdims_compounds, nmr_compounds, gcms_compounds),
               c("LC-MS/MS, DIMSn", "NMR", "GC-MS"),
-              "FIG_S7_dims_lcms_venn.pdf",
+              "FIG_S27_dims_lcms_venn.pdf",
               positions = c(-20, 26, 125),
               distances = c(0.055, 0.055, 0.055))
 }
@@ -592,7 +648,7 @@ create_workflow_analysis <- function(df) {
     summarise(
       compoundname = toString(sort(unique(name))),
       hmdb_id = toString(sort(unique(hmdb_ids))),
-      exact_mass = toString(unique(exact_mass_temp)),
+      exact_mass = toString(unique(exact_mass)),
       match_type = toString(unique(match_type)),
       
       inchikey = toString(sort(unique(inchikey))),
@@ -614,9 +670,6 @@ create_workflow_analysis <- function(df) {
       direct_parent = toString(sort(unique(direct_parent))[1]),
       molecular_framework = toString(sort(unique(molecular_framework))[1]),
       predicted_lipimaps_terms = toString(sort(unique(predicted_lipimaps_terms))[1]),
-      
-      
-      
     )
   
   workflow_summary2 <- df_merged_filtered_for_hist  %>%
@@ -624,7 +677,7 @@ create_workflow_analysis <- function(df) {
     summarise(
       compoundname = toString(sort(unique(name))),
       hmdb_id = toString(sort(unique(hmdb_ids))),
-      exact_mass = toString(unique(exact_mass_temp)),
+      exact_mass = toString(unique(exact_mass)),
       match_type = toString(unique(match_type)),
       
       inchikey = toString(sort(unique(inchikey))),
@@ -821,7 +874,7 @@ create_mass_histogram <- function(df, summary_df) {
           panel.grid.minor = element_blank())+
     facet_wrap(~polarity, ncol = 1)
   
-  ggsave("output/FIG_S9_annotations_all_mass_hist.pdf", width=20, height=10)
+  ggsave("output/FIG_S29_annotations_all_mass_hist.pdf", width=20, height=10)
 }
 
 # Export Functions ----
@@ -840,7 +893,8 @@ export_summary_tables <- function(summary_df) {
     'predicted_lipidmaps_terms', 'assays', 'extraction', 'spe', 'spe_frac',
     'chromatography', 'measurement', 'polarity', 'lcmsdimsbool', 'gcmsbool',
     'nmrbool', 'smbool', 'mfbool', 'siriusbool', 'mzcloudsmbool', 'galaxysmbool',
-    'gnpssmbool', 'msi_level'
+    'gnpssmbool', 'msi_level','representative_mz','representative_rt', 'representative_adduct',
+    'representative_well', 'representative_assay', 'representative_measurement'
   )
   
   summary_export <- summary_df[, export_columns]
@@ -875,10 +929,10 @@ run_daphnia_analysis <- function() {
   start_time <- Sys.time()
   
   # 1. Load and preprocess data
-  df_merged_filtered <<- load_annotation_data()
+  df_merged_filtered <- load_annotation_data()
   
   # 2. Create main compound summary
-  compound_summary <<- create_compound_summary(df_merged_filtered)
+  compound_summary <- create_compound_summary(df_merged_filtered)
   
   # 3. Calculate and display statistics
   stats <- calculate_annotation_stats(compound_summary)

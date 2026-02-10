@@ -24,6 +24,7 @@ suppressPackageStartupMessages({
   library(stringi)
   library(ggpubr)
   library(data.table)
+  library(cowplot)
 })
 
 # Configuration ----
