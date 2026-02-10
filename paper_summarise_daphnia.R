@@ -447,7 +447,7 @@ create_treemap <- function(summary_df) {
   
   compound_class_superclass_count$superclass <- factor(compound_class_superclass_count$superclass,
                                                        levels=unique(compound_superclass_count_only$superclass))
-  pdf('output/FIG_4a_tree_map.pdf', width=15, height = 9)
+  pdf('output/FIG_5a_tree_map.pdf', width=15, height = 9)
   
   c25_treemap <- c(
     "dodgerblue2", 
@@ -524,7 +524,7 @@ create_pca_plot <- function(summary_df) {
     theme_minimal()  +
     theme(legend.position="")
   
-  ggsave("output/FIG_4b_annotations_all_pca.pdf", width=6, height=6)
+  ggsave("output/FIG_5b_annotations_all_pca.pdf", width=6, height=6)
   
   ggplot(data = dtp) + 
     geom_point(aes(x = PC1, y = PC2, col = Superclass)) + 
@@ -533,7 +533,7 @@ create_pca_plot <- function(summary_df) {
     ylab(paste('PC2 (', round(pca_res_summary$importance[,2][2]*100,1), '%)', sep='')) + 
     theme_minimal()
   
-  ggsave("output/FIG_4b_annotations_all_pca_legend.pdf", width=8, height=6)
+  ggsave("output/FIG_5b_annotations_all_pca_legend.pdf", width=8, height=6)
   
 }
 
@@ -579,14 +579,14 @@ create_venn_diagrams <- function(summary_df, df_merged_filtered) {
   neg_compounds <- unique(polarity_summary[polarity_summary$polarity == 'NEGATIVE', ]$inchikey)
   create_venn(list(pos_compounds, neg_compounds), 
               c("Positive", "Negative"), 
-              "FIG_5c_polarity_venn.pdf")
+              "FIG_6c_polarity_venn.pdf")
   
   # 2. Extraction comparison  
   apolar_compounds <- unique(extraction_summary[extraction_summary$extraction == 'APOLAR', ]$inchikey)
   polar_compounds <- unique(extraction_summary[extraction_summary$extraction == 'POLAR', ]$inchikey)
   create_venn(list(apolar_compounds, polar_compounds), 
               c("Apolar", "Polar"), 
-              "FIG_5a_extraction_venn.pdf")
+              "FIG_6a_extraction_venn.pdf")
   
   # 3. Annotation method comparison
   sm_compounds <- unique(summary_df[summary_df$smbool == 1, ]$inchikey)
@@ -614,7 +614,7 @@ create_venn_diagrams <- function(summary_df, df_merged_filtered) {
   phe_compounds <- unique(summary_df[grepl('PHE', summary_df$chromatography), ]$inchikey)
   create_venn(list(c30_compounds, amd_compounds, phe_compounds),
               c("C30", "AMD", "PHE"),
-              "FIG_5b_chromatography_type_venn.pdf",
+              "FIG_6b_chromatography_type_venn.pdf",
               positions = c(-20, 26, 125),
               distances = c(0.055, 0.055, 0.055))
   
@@ -774,13 +774,13 @@ create_workflow_analysis <- function(df) {
     facet_wrap(~polarity, ncol= 1)
   
   
-  ggsave("output/FIG_5d_annotations_all_workflow_bar.pdf", width=10, height=10)
+  ggsave("output/FIG_6d_annotations_all_workflow_bar.pdf", width=10, height=10)
   
   workflow_bar_with_legend <- workflow_bar  +   theme(legend.position="bottom",
                                                       panel.grid.major = element_blank(),
                                                       panel.grid.minor = element_blank())
   
-  ggsave("output/FIG_5d_annotations_all_workflow_bar_with_legend.pdf", width=10, height=10)
+  ggsave("output/FIG_6d_annotations_all_workflow_bar_with_legend.pdf", width=10, height=10)
 
   # Create UpSet plot
   create_upset_plot(workflow_summary3)
@@ -803,7 +803,7 @@ create_upset_plot <- function(workflow_summary) {
                   sets.bar.color='lightblue',
                   show.numbers=FALSE)
   
-  pdf('output/FIG_5e_annotations_all_upset.pdf', width=13, height=5)
+  pdf('output/FIG_6e_annotations_all_upset.pdf', width=13, height=5)
   print(upsetr)
   dev.off()
   
@@ -814,7 +814,7 @@ create_upset_plot <- function(workflow_summary) {
                   sets.bar.color='lightblue',
                   show.numbers='yes')
   
-  pdf('output/FIG_5e_annotations_all_upsetR_subset_assays_with_numbers.pdf', width=13, height=5)
+  pdf('output/FIG_6e_annotations_all_upsetR_subset_assays_with_numbers.pdf', width=13, height=5)
   print(upsetr)
   dev.off()
 }
@@ -955,7 +955,7 @@ run_daphnia_analysis <- function() {
   # Classification bar plots
   for (level in c("superclass", "class", "subclass")) {
     plot <- create_classification_barplot(compound_summary, level)
-    filename <- paste0("FIG_4", switch(level, "superclass" = "c", "class" = "d", "subclass" = "e"), 
+    filename <- paste0("FIG_5", switch(level, "superclass" = "c", "class" = "d", "subclass" = "e"), 
                       "_annotations_all_", level, "_bar.pdf")
     save_plot(plot, filename, width = 4, height = 4)
   }
@@ -963,11 +963,11 @@ run_daphnia_analysis <- function() {
   # Save legend separately
   legend_plot <- create_classification_barplot(compound_summary, "superclass")
   legend <- cowplot::get_legend(legend_plot)
-  pdf(file.path(OUTPUT_DIR, 'FIG_4_legend.pdf'))
+  pdf(file.path(OUTPUT_DIR, 'FIG_5_legend.pdf'))
   grid::grid.newpage()
   grid::grid.draw(legend)
   dev.off()
-  cat("Saved: output/FIG_4_legend.pdf\n")
+  cat("Saved: output/FIG_5_legend.pdf\n")
   
   # Figure 5: Workflow and method comparisons
   create_workflow_analysis(df_merged_filtered)
