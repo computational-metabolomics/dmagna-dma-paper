@@ -9,6 +9,7 @@ The repository contains three main analysis workflows:
 1. **Daphnia annotation summary** - Analysis of metabolite annotations from *D. magna* samples
 2. **Metabolite reference standards analysis summary** - Analysis of metabolite standard mixture (MSM) data
 3. **Phylo analysis** - Phylogenetic/metabolomics analysis across species
+4. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
 ## Project Structure
 
@@ -86,9 +87,9 @@ source("paper_summarise_msm.R")
 - Workflow-specific analysis for MSM data
 
 **Key outputs:**
-- `FIG_S10a_galaxy_msms_workflow_bar.pdf` - MSM workflow analysis
-- `FIG_S10b_treemap_msm.pdf` - MSM tree map
-- `FIG_S11_presence_absence_match_type_msm.pdf` - Match type analysis
+- `FIG_S30a_galaxy_msms_workflow_bar.pdf` - MSM workflow analysis
+- `FIG_S30b_treemap_msm.pdf` - MSM tree map
+- `FIG_S31_presence_absence_match_type_msm.pdf` - Match type analysis
 - `msm_annotations_summary.csv` - MSM summary statistics
 
 ### 3. Phylo Analysis
@@ -105,7 +106,30 @@ source("paper_phylometab.R")
 - Database mapping analysis (KEGG, HMDB, MTox, ChEBI)
 
 **Key output:**
-- `FIG_6_phylomet.pdf` - Phylogenetic metabolomics plot
+- `FIG_7_phylomet.pdf` - Phylogenetic metabolomics plot
+
+### 4. Example Feature Check (Galaxy workflow history access)
+
+Use the example feature check to show how readers can directly access files from Galaxy workflows and verify LC-MS feature details against blank-filtered XCMS features.
+
+```r
+source("example_feature_check.R")
+```
+
+**What it does:**
+- Downloads XCMS peak lists and xcmsSet objects from Galaxy URLs
+- Rebuilds RT windows and performs blank filtering
+- Links the XCMS features from the Galaxy workflow to full annotation list
+
+
+**Inputs:**
+- Galaxy workflow file URLs in `input/input_for_feature_check/galaxy_peaklist_references.csv`
+- Sample metadata in `input/input_for_feature_check/GalaxyNone-[samplelist_dma_daphnia_magna.tabular].tabular`
+- Full annotation list in [input/input_for_summary_plots/merged_annotations_all_classified.zip](input/input_for_summary_plots/merged_annotations_all_classified.zip)
+
+**Key outputs (per assay in `output/<assay_name>/`):**
+- `*_DE_blank_filtered.RDS` and `*_blank_filtered_peak_matrix.csv`
+- `*_xcms_passed_annos.csv`
 
 ## Key Dependencies
 
@@ -132,12 +156,12 @@ The analysis uses several types of input data:
 The code reproduces the following figures from the paper:
 
 **Main Figures:**
-- Figure 4: Metabolite annotation overview (tree map, PCA, classification bars)
-- Figure 5: Workflow and method comparisons (Venn diagrams, upset plots)
-- Figure 6: Phylogenetic metabolomics analysis
+- Figure 5: Metabolite annotation overview (tree map, PCA, classification bars)
+- Figure 6: Workflow and method comparisons (Venn diagrams, upset plots)
+- Figure 7: Phylogenetic metabolomics analysis
 
 **Supplementary Figures:**
-- Figure S7-S11: Additional method comparisons and MSM analysis
+- Aditional method comparisons and MSM analysis
 
 ## Output Files
 
@@ -149,4 +173,4 @@ See LICENSE file for details.
 
 ## Citation
 
-If you use this code, please cite the corresponding *D. magna* DMA paper.
+If you use this code or data within this repo please cite the corresponding *D. magna* DMA paper.

@@ -206,6 +206,7 @@ create_compound_summary <- function(df) {
       molecular_formula = toString(sort(unique(molecular_formula))[1]),
       monoisotopic_exact_mass = toString(sort(unique(monoisotopic_exact_mass))[1]),
       compound_name = toString(sort(unique(compound_name))),
+      all_names = toString(sort(unique(name))),
       
       # Database IDs
       pubchem_cids = toString(sort(unique(pubchem_cids))),
@@ -268,6 +269,7 @@ create_compound_summary <- function(df) {
   
   # Clean mass data
   summary_df$monoisotopic_exact_mass[summary_df$monoisotopic_exact_mass == 'NA'] <- ''
+
   
   cat("Created summary for", nrow(summary_df), "unique compounds\n")
   return(summary_df)
@@ -284,6 +286,7 @@ create_factor_summary <- function(df, group_vars) {
     group_by(across(all_of(group_vars_all))) %>%
     summarise(
       compoundname = toString(sort(unique(name))),
+      
       exact_mass = toString(unique(exact_mass)),
       match_type = toString(unique(match_type)),
       
@@ -368,9 +371,21 @@ calculate_annotation_stats <- function(summary_df) {
   stats$count_inchikey1_ms <- nrow(compound_summary_inchikey1_ms)
   
   
+  # Vrious example filters used for publication
+  
+  stats$mf_sm_only <- nrow(summary_df %>% filter((mfbool == TRUE | smbool == TRUE)))
+  
+  stats$mf_sm_nmr_gcms_only <- nrow(summary_df %>%
+                                     filter((mfbool == TRUE | smbool == TRUE | nmrbool == TRUE | gcmsbool == TRUE)))
+  
+  stats$frag_two_of_three <- nrow(summary_df %>%
+                                    filter((mfbool + smbool + siriusbool) >= 2))
+  stats$frag_two_of_three_nmr_gcms <- nrow(summary_df %>%
+                                            filter((mfbool + smbool + siriusbool) >= 2 |
+                                                     nmrbool == TRUE |
+                                                     gcmsbool == TRUE))
 
-  
-  
+
   return(stats)
 }
 
@@ -888,7 +903,7 @@ export_summary_tables <- function(summary_df) {
   # Format main summary for export
   export_columns <- c(
     'inchikey', 'inchikey1', 'smiles', 'molecular_formula', 'monoisotopic_exact_mass',
-    'compound_name', 'pubchem_cids', 'hmdb_ids', 'kegg_ids', 'chebi_ids',
+    'compound_name', 'all_names', 'pubchem_cids', 'hmdb_ids', 'kegg_ids', 'chebi_ids',
     'kingdom', 'superclass', 'class', 'subclass', 'direct_parent', 'molecular_framework',
     'predicted_lipidmaps_terms', 'assays', 'extraction', 'spe', 'spe_frac',
     'chromatography', 'measurement', 'polarity', 'lcmsdimsbool', 'gcmsbool',
@@ -898,6 +913,7 @@ export_summary_tables <- function(summary_df) {
   )
   
   summary_export <- summary_df[, export_columns]
+  
   write.csv(summary_export, file.path(OUTPUT_DIR, 'daphnia_annotation_summary.csv'), na = "", row.names = FALSE)
   
   # Export classification counts
@@ -944,6 +960,11 @@ run_daphnia_analysis <- function() {
   cat("MS-based annotations:", stats$ms_based, "\n")
   cat("MS-based annotations (unique to MS):", stats$ms_based_only, "\n")
   
+
+  cat("MetFrag/spectral matching only:", stats$mf_sm_only, "\n")
+  cat("MetFrag/spectral matching/NMR/GC-MS only:", stats$mf_sm_nmr_gcms_only, "\n")
+  cat("Frag approaches >=2 of 3:", stats$frag_two_of_three, "\n")
+  cat("Frag approaches >=2 of 3 + NMR + GC-MS:", stats$frag_two_of_three_nmr_gcms, "\n")
   
   # 4. Generate all figures
   cat("\n=== Generating Figures ===\n")
