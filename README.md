@@ -15,20 +15,24 @@ The repository contains three main analysis workflows:
 
 ```
 ├── input/
+│   ├── input_for_feature_check/          # Inputs for Galaxy workflow feature check
+│   │   ├── galaxy_peaklist_references.csv
+│   │   └── GalaxyNone-[samplelist_dma_daphnia_magna.tabular].tabular
 │   ├── input_for_summary_plots/          # Data for Daphnia and MSM analysis
 │   │   ├── merged_annotations_all_classified.zip
 │   │   ├── metabolite_standard_mixture_details.csv
 │   │   └── pubchem_set.zip
 │   └── input_for_phylometab_plot/        # Data for phylometab analysis
 │       ├── chebi_with_inchikey_source_classyfire.csv
+│       ├── Daphnia_ChEBI.csv
+│       ├── MTox.csv
 │       ├── phyloT_generated_tree_1734701763_newick.txt
-│       ├── pubchem_kegg_hmdb_expanded.zip
-│       └── Supplementary Data - *.csv
+│       └── pubchem_kegg_hmdb_expanded.zip
 ├── output/                               # Generated figures and summary tables
-├── paper_summarise_daphnia.R            # Main Daphnia annotation analysis
-├── paper_summarise_msm.R                # Metabolite standard mixture analysis
-├── paper_phylometab.R                   # Phylometab metabolomics analysis
-└── renv.lock                            # R package dependencies
+├── example_feature_check.R               # Galaxy workflow feature check example
+├── paper_summarise_daphnia.R             # Main Daphnia annotation analysis
+├── paper_summarise_msm.R                 # Metabolite standard mixture analysis
+└──  paper_phylometab.R                    # Phylometab metabolomics analysis
 ```
 
 ## Requirements
@@ -68,11 +72,12 @@ source("paper_summarise_daphnia.R")
 - Tree maps and upset plots
 
 **Key outputs:**
-- `FIG_4a_tree_map.pdf` - Tree map visualization
-- `FIG_4b_annotations_all_pca.pdf` - PCA plot of annotations
-- `FIG_4c-e_*_bar.pdf` - Bar charts for chemical classifications
-- `FIG_5a-e_*.pdf` - Workflow and method comparison plots
+- `FIG_5a_tree_map.pdf` - Tree map visualization
+- `FIG_5b_annotations_all_pca.pdf` - PCA plot of annotations
+- `FIG_5c-e_*_bar.pdf` - Bar charts for chemical classifications
+- `FIG_6a-e_*.pdf` - Workflow and method comparison plots
 - `daphnia_annotation_summary.csv` - Summary statistics table
+- `FIG_27-29.pdf/png` - Supplementary annotation summary plots
 
 ### 2. Metabolite Standard Mixture Analysis
 
@@ -141,15 +146,6 @@ The analysis relies on several R packages:
 - **Phylogenetics:** `ape`, `ggtree`, `aplot`
 - **Data import:** `openxlsx`, `jsonlite`
 
-## Data Sources
-
-The analysis uses several types of input data:
-
-- **Metabolite annotations:** Classified metabolite annotations from DMA experiments
-- **Reference standards:** Metabolite standard mixture composition and annotations
-- **Database mappings:** Links to KEGG, HMDB, MTox, and ChEBI databases
-- **Phylogenetic data:** Species tree in Newick format
-- **Chemical classifications:** ClassyFire-based chemical taxonomy
 
 ## Figures Generated
 
