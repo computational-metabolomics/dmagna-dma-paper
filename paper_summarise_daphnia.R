@@ -214,6 +214,7 @@ create_compound_summary <- function(df) {
       hmdb_ids = toString(sort(unique(cts_hmdb_ids))[1]),
       kegg_ids = toString(sort(unique(cts_kegg_ids))[1]),
       chebi_ids = toString(sort(unique(cts_chebi_ids))[1]),
+      natural_product_inchikey1 = toString(sort(unique(natural_product_inchikey1))[1]),
       
       # Chemical classification
       kingdom = toString(sort(unique(kingdom))[1]),
@@ -903,7 +904,7 @@ export_summary_tables <- function(summary_df) {
   # Format main summary for export
   export_columns <- c(
     'inchikey', 'inchikey1', 'smiles', 'molecular_formula', 'monoisotopic_exact_mass',
-    'compound_name', 'all_names', 'pubchem_cids', 'hmdb_ids', 'kegg_ids', 'chebi_ids',
+    'compound_name', 'all_names', 'pubchem_cids', 'hmdb_ids', 'kegg_ids', 'chebi_ids', 'natural_product_inchikey1',
     'kingdom', 'superclass', 'class', 'subclass', 'direct_parent', 'molecular_framework',
     'predicted_lipidmaps_terms', 'assays', 'extraction', 'spe', 'spe_frac',
     'chromatography', 'measurement', 'polarity', 'lcmsdimsbool', 'gcmsbool',
