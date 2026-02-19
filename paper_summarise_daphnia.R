@@ -967,6 +967,8 @@ run_daphnia_analysis <- function() {
   cat("Frag approaches >=2 of 3:", stats$frag_two_of_three, "\n")
   cat("Frag approaches >=2 of 3 + NMR + GC-MS:", stats$frag_two_of_three_nmr_gcms, "\n")
   
+  saveRDS(stats, file.path(OUTPUT_DIR, "summary_stats.RDS"))
+  
   # 4. Generate all figures
   cat("\n=== Generating Figures ===\n")
   

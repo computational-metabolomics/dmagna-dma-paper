@@ -163,6 +163,8 @@ The code reproduces the following figures from the paper:
 
 All generated figures are saved as PDF files in the `output/` directory. Summary tables are saved as CSV files for further analysis or inclusion in manuscripts.
 
+Also includes an updated metabolites file created for the MetaboLights study MTBLS2273.
+
 ## License
 
 See LICENSE file for details.
