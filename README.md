@@ -9,25 +9,30 @@ The repository contains three main analysis workflows:
 1. **Daphnia annotation summary** - Analysis of metabolite annotations from *D. magna* samples
 2. **Metabolite reference standards analysis summary** - Analysis of metabolite standard mixture (MSM) data
 3. **Phylo analysis** - Phylogenetic/metabolomics analysis across species
+4. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
 ## Project Structure
 
 ```
 ├── input/
+│   ├── input_for_feature_check/          # Inputs for Galaxy workflow feature check
+│   │   ├── galaxy_peaklist_references.csv
+│   │   └── GalaxyNone-[samplelist_dma_daphnia_magna.tabular].tabular
 │   ├── input_for_summary_plots/          # Data for Daphnia and MSM analysis
 │   │   ├── merged_annotations_all_classified.zip
 │   │   ├── metabolite_standard_mixture_details.csv
 │   │   └── pubchem_set.zip
 │   └── input_for_phylometab_plot/        # Data for phylometab analysis
 │       ├── chebi_with_inchikey_source_classyfire.csv
+│       ├── Daphnia_ChEBI.csv
+│       ├── MTox.csv
 │       ├── phyloT_generated_tree_1734701763_newick.txt
-│       ├── pubchem_kegg_hmdb_expanded.zip
-│       └── Supplementary Data - *.csv
+│       └── pubchem_kegg_hmdb_expanded.zip
 ├── output/                               # Generated figures and summary tables
-├── paper_summarise_daphnia.R            # Main Daphnia annotation analysis
-├── paper_summarise_msm.R                # Metabolite standard mixture analysis
-├── paper_phylometab.R                   # Phylometab metabolomics analysis
-└── renv.lock                            # R package dependencies
+├── example_feature_check.R               # Galaxy workflow feature check example
+├── paper_summarise_daphnia.R             # Main Daphnia annotation analysis
+├── paper_summarise_msm.R                 # Metabolite standard mixture analysis
+└──  paper_phylometab.R                    # Phylometab metabolomics analysis
 ```
 
 ## Requirements
@@ -43,7 +48,7 @@ The repository contains three main analysis workflows:
 3. init the R environment using renv:
 
 ```r
-renv::restore()
+renv::init()
 ```
 
 This will install all required packages with their exact versions as specified in `renv.lock`.
@@ -67,11 +72,12 @@ source("paper_summarise_daphnia.R")
 - Tree maps and upset plots
 
 **Key outputs:**
-- `FIG_4a_tree_map.pdf` - Tree map visualization
-- `FIG_4b_annotations_all_pca.pdf` - PCA plot of annotations
-- `FIG_4c-e_*_bar.pdf` - Bar charts for chemical classifications
-- `FIG_5a-e_*.pdf` - Workflow and method comparison plots
+- `FIG_5a_tree_map.pdf` - Tree map visualization
+- `FIG_5b_annotations_all_pca.pdf` - PCA plot of annotations
+- `FIG_5c-e_*_bar.pdf` - Bar charts for chemical classifications
+- `FIG_6a-e_*.pdf` - Workflow and method comparison plots
 - `daphnia_annotation_summary.csv` - Summary statistics table
+- `FIG_27-29.pdf/png` - Supplementary annotation summary plots
 
 ### 2. Metabolite Standard Mixture Analysis
 
@@ -86,9 +92,9 @@ source("paper_summarise_msm.R")
 - Workflow-specific analysis for MSM data
 
 **Key outputs:**
-- `FIG_S10a_galaxy_msms_workflow_bar.pdf` - MSM workflow analysis
-- `FIG_S10b_treemap_msm.pdf` - MSM tree map
-- `FIG_S11_presence_absence_match_type_msm.pdf` - Match type analysis
+- `FIG_S30a_galaxy_msms_workflow_bar.pdf` - MSM workflow analysis
+- `FIG_S30b_treemap_msm.pdf` - MSM tree map
+- `FIG_S31_presence_absence_match_type_msm.pdf` - Match type analysis
 - `msm_annotations_summary.csv` - MSM summary statistics
 
 ### 3. Phylo Analysis
@@ -105,7 +111,30 @@ source("paper_phylometab.R")
 - Database mapping analysis (KEGG, HMDB, MTox, ChEBI)
 
 **Key output:**
-- `FIG_6_phylomet.pdf` - Phylogenetic metabolomics plot
+- `FIG_7_phylomet.pdf` - Phylogenetic metabolomics plot
+
+### 4. Example Feature Check (Galaxy workflow history access)
+
+Use the example feature check to show how readers can directly access files from Galaxy workflows and verify LC-MS feature details against blank-filtered XCMS features.
+
+```r
+source("example_feature_check.R")
+```
+
+**What it does:**
+- Downloads XCMS peak lists and xcmsSet objects from Galaxy URLs
+- Rebuilds RT windows and performs blank filtering
+- Links the XCMS features from the Galaxy workflow to full annotation list
+
+
+**Inputs:**
+- Galaxy workflow file URLs in `input/input_for_feature_check/galaxy_peaklist_references.csv`
+- Sample metadata in `input/input_for_feature_check/GalaxyNone-[samplelist_dma_daphnia_magna.tabular].tabular`
+- Full annotation list in [input/input_for_summary_plots/merged_annotations_all_classified.zip](input/input_for_summary_plots/merged_annotations_all_classified.zip)
+
+**Key outputs (per assay in `output/<assay_name>/`):**
+- `*_DE_blank_filtered.RDS` and `*_blank_filtered_peak_matrix.csv`
+- `*_xcms_passed_annos.csv`
 
 ## Key Dependencies
 
@@ -117,31 +146,24 @@ The analysis relies on several R packages:
 - **Phylogenetics:** `ape`, `ggtree`, `aplot`
 - **Data import:** `openxlsx`, `jsonlite`
 
-## Data Sources
-
-The analysis uses several types of input data:
-
-- **Metabolite annotations:** Classified metabolite annotations from DMA experiments
-- **Reference standards:** Metabolite standard mixture composition and annotations
-- **Database mappings:** Links to KEGG, HMDB, MTox, and ChEBI databases
-- **Phylogenetic data:** Species tree in Newick format
-- **Chemical classifications:** ClassyFire-based chemical taxonomy
 
 ## Figures Generated
 
 The code reproduces the following figures from the paper:
 
 **Main Figures:**
-- Figure 4: Metabolite annotation overview (tree map, PCA, classification bars)
-- Figure 5: Workflow and method comparisons (Venn diagrams, upset plots)
-- Figure 6: Phylogenetic metabolomics analysis
+- Figure 5: Metabolite annotation overview (tree map, PCA, classification bars)
+- Figure 6: Workflow and method comparisons (Venn diagrams, upset plots)
+- Figure 7: Phylogenetic metabolomics analysis
 
 **Supplementary Figures:**
-- Figure S7-S11: Additional method comparisons and MSM analysis
+- Aditional method comparisons and MSM analysis
 
 ## Output Files
 
 All generated figures are saved as PDF files in the `output/` directory. Summary tables are saved as CSV files for further analysis or inclusion in manuscripts.
+
+Also includes an updated metabolites file created for the MetaboLights study MTBLS2273.
 
 ## License
 
@@ -149,4 +171,4 @@ See LICENSE file for details.
 
 ## Citation
 
-If you use this code, please cite the corresponding *D. magna* DMA paper.
+If you use this code or data within this repo please cite the corresponding *D. magna* DMA paper.

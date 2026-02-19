@@ -85,12 +85,13 @@ load_msm_data <- function() {
 create_msm_summary <- function(dfmsm_merged, standardmix_details) {
   cat("\n=== Creating Main Annotation Summary ===\n")
   
+
   compound_summary1 <- dfmsm_merged  %>%
-    group_by(inchikey1) %>%
-    summarise(
+    dplyr::group_by(inchikey1) %>%
+    dplyr::summarise(
       compoundname = toString(sort(unique(name))),
       match_type = toString(unique(match_type)),
-      inchikey2d = toString(unique(inchikey1)),
+      inchikey1 = toString(unique(inchikey1)),
       
       smbool = max(smbool, na.rm = T),
       mfbool = max(mfbool, na.rm = T),
@@ -115,7 +116,9 @@ create_msm_summary <- function(dfmsm_merged, standardmix_details) {
       chromatography = toString(sort(unique(chromatography))),
       
       measurement = toString(sort(unique(measurement))),
-      polarity = toString(sort(unique(polarity)))
+      polarity = toString(sort(unique(polarity))),
+      
+      .groups = 'drop'
     )
   
   # Merge with the standard mix (so only rows which match to the inchikey 2D are shown)
@@ -158,8 +161,8 @@ create_workflow_summary <- function(dfmsm_merged, standardmix_details) {
   # Summary by workflow components (with polarity)
   cat("Creating workflow summary with polarity...\n")
   compound_summary2 <- dfmsm_merged  %>%
-    group_by(inchikey1, polarity, spe, spe_frac, chromatography) %>%
-    summarise(
+    dplyr::group_by(inchikey1, polarity, spe, spe_frac, chromatography) %>%
+    dplyr::summarise(
       compoundname = toString(sort(unique(name))),
       hmdb_id = toString(sort(unique(hmdb_ids))),
       match_type = toString(unique(match_type)),
@@ -187,8 +190,8 @@ create_workflow_summary <- function(dfmsm_merged, standardmix_details) {
   # Summary by workflow components (all polarities combined)
   cat("Creating workflow summary for all polarities...\n")
   compound_summary3 <- dfmsm_merged  %>%
-    group_by(inchikey1, spe, spe_frac, chromatography) %>%
-    summarise(
+    dplyr::group_by(inchikey1, spe, spe_frac, chromatography) %>%
+    dplyr::summarise(
       compoundname = toString(sort(unique(name))),
       hmdb_id = toString(sort(unique(hmdb_ids))),
       match_type = toString(unique(match_type)),
@@ -246,8 +249,8 @@ create_workflow_summary <- function(dfmsm_merged, standardmix_details) {
   
   # Order superclasses by frequency
   compound_superclass_count <- compound_summary4 %>%
-    group_by(superclass) %>%
-    summarise(count = n_distinct(inchikey1), n = n(), .groups = 'drop') %>%
+    dplyr::group_by(superclass) %>%
+    dplyr::summarise(count = n_distinct(inchikey1), n = n(), .groups = 'drop') %>%
     arrange(desc(n)) 
   
   compound_summary4$superclass <- factor(compound_summary4$superclass, 
@@ -260,11 +263,11 @@ create_workflow_summary <- function(dfmsm_merged, standardmix_details) {
 # PLOTTING FUNCTIONS
 # =============================================================================
 
-#' Create workflow bar plot (Figure S10a)
+#' Create workflow bar plot (Figure S30a)
 #' @param compound_summary4 Workflow summary dataframe
 #' @param c25 Color palette
 create_workflow_barplot <- function(compound_summary4, c25) {
-  cat("Creating Figure S10a: Workflow analysis bar plot...\n")
+  cat("Creating Figure S30a: Workflow analysis bar plot...\n")
   
   galaxy_msm_bar <- ggplot(compound_summary4, aes(x = extract_spe_lc, y = count, fill = superclass)) +
     geom_col(width = 0.7) +
@@ -278,28 +281,28 @@ create_workflow_barplot <- function(compound_summary4, c25) {
     facet_wrap(~polarity, ncol = 1) +
     labs(x = "Workflow", y = "Unique compound count")
   
-  ggsave(file.path(OUTPUT_DIR, "FIG_S10a_galaxy_msms_workflow_bar.pdf"), 
+  ggsave(file.path(OUTPUT_DIR, "FIG_S30a_galaxy_msms_workflow_bar.pdf"), 
          plot = galaxy_msm_bar, width = 10, height = 10)
-  cat("Saved: FIG_S10a_galaxy_msms_workflow_bar.pdf\n")
+  cat("Saved: FIG_S30a_galaxy_msms_workflow_bar.pdf\n")
   
   return(galaxy_msm_bar)
 }
 
-#' Create chemical class tree map (Figure S10b)
+#' Create chemical class tree map (Figure S30b)
 #' @param compound_summary4 Workflow summary dataframe
 #' @param c25 Color palette
 create_msm_treemap <- function(compound_summary4, c25) {
-  cat("Creating Figure S10b: Chemical class tree map...\n")
+  cat("Creating Figure S30b: Chemical class tree map...\n")
   
   compound_class_count <- compound_summary4 %>%
-    group_by(class) %>%
-    summarise(count = n_distinct(inchikey1),
+    dplyr::group_by(class) %>%
+    dplyr::summarise(count = n_distinct(inchikey1),
              superclass = unique(superclass),
              n = n(),
              .groups = 'drop') %>%
     arrange(desc(n))
   
-  pdf(file.path(OUTPUT_DIR, 'FIG_S10b_treemap_msm.pdf'))
+  pdf(file.path(OUTPUT_DIR, 'FIG_S30b_treemap_msm.pdf'))
   treemap(compound_class_count,
           index = c("superclass", "class"),
           vSize = "count",
@@ -309,13 +312,13 @@ create_msm_treemap <- function(compound_summary4, c25) {
           align.labels = list(c("left", "top"), c("right", "bottom")),
           na.rm = FALSE)
   dev.off()
-  cat("Saved: FIG_S10b_treemap_msm.pdf\n")
+  cat("Saved: FIG_S30b_treemap_msm.pdf\n")
 }
 
-#' Create presence/absence plot (Figure S11)
+#' Create presence/absence plot (Figure S31)
 #' @param compound_summary1 Main compound summary
 create_presence_absence_plot <- function(compound_summary1) {
-  cat("Creating Figure S11: Annotation method presence/absence plot...\n")
+  cat("Creating Figure S31: Annotation method presence/absence plot...\n")
   
   # Prepare data for presence/absence plot
   summary_bool <- compound_summary1[,c('Compound', 'smbool', 'siriusbool',
@@ -334,8 +337,8 @@ create_presence_absence_plot <- function(compound_summary1) {
   
   # Calculate method summary statistics
   bool_summary <- booldf %>%
-    group_by(name) %>%
-    summarise(sum = sum(value), .groups = 'drop')
+    dplyr::group_by(name) %>%
+    dplyr::summarise(sum = sum(value), .groups = 'drop')
   
   cat("Annotation method coverage:\n")
   for(i in 1:nrow(bool_summary)) {
@@ -352,9 +355,9 @@ create_presence_absence_plot <- function(compound_summary1) {
     theme(legend.position = "none",
           axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   
-  ggsave(file.path(OUTPUT_DIR, "FIG_S11_presence_absence_match_type_msm.pdf"), 
+  ggsave(file.path(OUTPUT_DIR, "FIG_S31_presence_absence_match_type_msm.pdf"), 
          plot = presence_plot, width = 4, height = 6.5)
-  cat("Saved: FIG_S11_presence_absence_match_type_msm.pdf\n")
+  cat("Saved: FIG_S31_presence_absence_match_type_msm.pdf\n")
   
   return(presence_plot)
 }
@@ -399,9 +402,9 @@ run_msm_analysis <- function() {
   cat("\nRuntime:", runtime, "seconds\n")
   cat("\nOutputs saved:\n")
   cat("  - msm_annotations_summary.csv\n")
-  cat("  - FIG_S10a_galaxy_msms_workflow_bar.pdf\n")
-  cat("  - FIG_S10b_treemap_msm.pdf\n")
-  cat("  - FIG_S11_presence_absence_match_type_msm.pdf\n")
+  cat("  - FIG_S30a_galaxy_msms_workflow_bar.pdf\n")
+  cat("  - FIG_S30b_treemap_msm.pdf\n")
+  cat("  - FIG_S31_presence_absence_match_type_msm.pdf\n")
   cat("=============================================================================\n")
 }
 

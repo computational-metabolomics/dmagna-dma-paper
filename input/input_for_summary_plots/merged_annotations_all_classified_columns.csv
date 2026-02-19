@@ -1,0 +1,96 @@
+section,column_name,description
+identifiers,inchikey,InChIKey for the assigned annotation
+identifiers,inchikey1,InChIKey 1D (first block) for grouping
+identifiers,merged_id,Identifier for merged annotation record
+identifiers,merged_filt_id,Identifier for merged record after initial filtering
+Columns from Galaxy workflow,galaxy_merge_id,Galaxy merge identifier for the feature
+Columns from Galaxy workflow,sid,scanid from Galaxy DIMS feature table
+Columns from Galaxy workflow,grpid,Group identifier from Galaxy LC-MS (XCMS) feature table
+Columns from Galaxy workflow,grp_name,Group name from Galaxy LC-MS (XCMS)feature table
+Columns from Galaxy workflow,mz,Feature mass-to-charge ratio
+Columns from Galaxy workflow,i,Feature intensity
+Columns from Galaxy workflow,rt,Feature retention time
+Columns from Galaxy workflow,rtmin,Minimum retention time
+Columns from Galaxy workflow,rtmax,Maximum retention time
+Columns from Galaxy workflow,lcms_grpid_mtchs,LC-MS group id matches (testing purposes only)
+Columns from Galaxy workflow,dims_sid_mtchs,DIMS sample id matches (testing purposes only)
+Columns from Galaxy workflow,well,Plate well position fro DIMS
+Columns from Galaxy workflow,kegg_cids,KEGG compound identifiers
+Columns from Galaxy workflow,kegg_brite,KEGG BRITE classification
+Columns from Galaxy workflow,kegg_drugs,KEGG drug identifiers
+Columns from Galaxy workflow,hmdb_ids,HMDB identifiers
+Columns from Galaxy workflow,hmdb_bio_custom_flag,HMDB bio custom flag
+Columns from Galaxy workflow,hmdb_drug_flag,HMDB drug flag
+Columns from Galaxy workflow,biosim_max_count,Maximum biosimilarity match count
+Columns from Galaxy workflow,biosim_hmdb_ids,HMDB IDs from biosimilarity hits
+Columns from Galaxy workflow,fragmentation_acquistion_num,Fragmentation acquisition count
+Columns from Galaxy workflow,precursor_ion_purity,Precursor ion purity metric (msPurity)
+Columns from Galaxy workflow,accession,Accession identifier (for spectral matching)
+Columns from Galaxy workflow,rdpc,Reverse dot product (cosine) (for spectral matching)
+Columns from Galaxy workflow,cdpc,Consensus dot product (cosine) (for spectral matching)
+Columns from Galaxy workflow,mcount,Matched peak count (for spectral matching)
+Columns from Galaxy workflow,allcount,Total peak count (for spectral matching)
+Columns from Galaxy workflow,mpercent,Matched peak percent (for spectral matching)
+Columns from Galaxy workflow,sirius_score,SIRIUS score
+Columns from Galaxy workflow,metfrag_score,MetFrag score
+Columns from Galaxy workflow,sm_score,Similarity score standard dot product (cosine) (for spectral matching)
+Columns from Galaxy workflow,ms1_lookup_score,MS1 lookup score
+Columns from Galaxy workflow,biosim_max_score,Maximum biosimilarity score
+Columns from Galaxy workflow,wscore,Weighted score
+Columns from Galaxy workflow,rank,Annotation rank
+Columns from Galaxy workflow,adduct_overall,Assigned adduct
+mzCloud columns,mzCloud_DBqueryspectrumId,mzCloud query spectrum identifier
+mzCloud columns,mzCloud_retentiontime,mzCloud query retention time
+mzCloud columns,mzCloud_ScanFilter,mzCloud scan filter
+mzCloud columns,mzCloud_queryMz,mzCloud query m/z
+GNPS columns,gnps_hit_id,GNPS hit identifier
+GNPS columns,gnps_SpecMZ,GNPS query m/z
+GNPS columns,gnps_RT_Query,GNPS query retention time
+NMR and GC-MS columns,nmr_id,NMR identifier
+NMR and GC-MS columns,gcms_id,GC-MS identifier
+Assay information,assay,Assay name
+Assay information,extraction,Extraction method
+Assay information,spe,Solid phase extraction type
+Assay information,spe_frac,SPE fraction label
+Assay information,chromatography,Chromatography method
+Assay information,measurement,Measurement type
+Assay information,polarity,Ionization polarity
+Flags for different data types and annotations,match_type,Annotation match type
+Flags for different data types and annotations,smbool,Spectral match flag
+Flags for different data types and annotations,mfbool,MetFrag match flag
+Flags for different data types and annotations,siriusbool,SIRIUS match flag
+Flags for different data types and annotations,mzcloudsmbool,mzCloud spectral match flag
+Flags for different data types and annotations,nmrbool,NMR match flag
+Flags for different data types and annotations,gcmsbool,GC-MS match flag
+Flags for different data types and annotations,galaxysmbool,Galaxy spectral match flag
+Flags for different data types and annotations,gnpssmbool,GNPS spectral match flag
+Flags for different data types and annotations,galaxybool,Galaxy annotation flag
+Flags for different data types and annotations,endog_flag,Endogenous annotation flag
+Flags for different data types and annotations,endog_hmdb_flag,Endogenous HMDB flag
+Flags for different data types and annotations,dupe,Duplicate record flag
+Flags for different data types and annotations,spe_frac_full,Full SPE fraction label
+Flags for different data types and annotations,lcmsdimsbool,LC-MS/DIMS match flag
+Flags for different data types and annotations,msm,Metabolite standard mixture flag (i.e. this annotation is for standards not for daphnia)
+Annotation columns,name,Compound name
+Annotation columns,msi_level,MSI identification level
+Annotation columns,smiles,SMILES string
+Annotation columns,pubchem_cid,PubChem CID
+Annotation columns,pubchem_cids,PubChem CID list
+Annotation columns,molecular_formula,Molecular formula
+Annotation columns,monoisotopic_exact_mass,Monoisotopic exact mass
+Annotation columns,exact_mass,Exact mass
+Annotation columns,exact_mass_temp,Intermediate exact mass value
+Annotation columns,kingdom,Chemical kingdom
+Annotation columns,superclass,Chemical superclass
+Annotation columns,class,Chemical class
+Annotation columns,subclass,Chemical subclass
+Annotation columns,direct_parent,Direct parent class
+Annotation columns,molecular_framework,Molecular framework
+Annotation columns,predicted_lipimaps_terms,Predicted LipiMaps terms
+Annotation columns,natural_product_inchikey1,Natural product InChIKey 1D
+Annotation columns,cts_name,CTS compound name
+Annotation columns,cts_hmdb_ids,CTS HMDB identifiers
+Annotation columns,cts_kegg_ids,CTS KEGG identifiers
+Annotation columns,cts_chebi_ids,CTS ChEBI identifiers
+Annotation columns,compound_name,Normalised compound name
+Annotation columns,synonym,Compound synonym list

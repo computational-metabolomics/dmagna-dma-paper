@@ -24,6 +24,7 @@ suppressPackageStartupMessages({
   library(stringi)
   library(ggpubr)
   library(data.table)
+  library(cowplot)
 })
 
 # Configuration ----
@@ -55,7 +56,7 @@ load_phylometab_data <- function() {
   
   # Load DMA annotation summary
   cat("Loading DMA annotation summary...\n")
-  dma_df <- read.csv("input/input_for_phylometab_plot/Supplementary Data - 2 - Metabolite Annotation Summary.csv", 
+  dma_df <- read.csv("output/daphnia_annotation_summary.csv", 
                      stringsAsFactors = FALSE)
   
   # Filter out empty superclass entries
@@ -154,7 +155,7 @@ map_dma_to_databases <- function(dma_df, kegg_hmdb_pth, mtox_pth, all_daphnia_pt
   mtox_bool <- dma_df$inchikey1 %in% mapping_mtox$InchiKey1
   dma_df[mtox_bool, ]$mtox <- dma_df[mtox_bool, ]$reliability_score
   
-  # Map to Daphnia ChEBI
+  # Map to Daphnia ChEBI (not just daphnia magna)
   cat("Mapping to Daphnia ChEBI database...\n")
   mapping_daphnia_all <- read.csv(all_daphnia_pth)
   daphnia_all_bool <- dma_df$inchikey1 %in% mapping_daphnia_all$INCHIKEY1
@@ -458,10 +459,10 @@ run_phylometab_analysis <- function() {
   
   # 2. Map to external databases and species
   mapping_results <- map_dma_to_databases(
-    dma_df,
+    dma_df = dma_df,
     kegg_hmdb_pth = "input/input_for_phylometab_plot/pubchem_kegg_hmdb_expanded.zip",
-    mtox_pth = "input/input_for_phylometab_plot/Supplementary Data - 5 - Matching to MTox.csv",
-    all_daphnia_pth = "input/input_for_phylometab_plot/Supplementary Data - 4 - Matching to Daphnia ChEBI.csv",
+    mtox_pth = "input/input_for_phylometab_plot/MTox.csv",
+    all_daphnia_pth = "input/input_for_phylometab_plot/Daphnia_ChEBI.csv",
     all_species_pth = "input/input_for_phylometab_plot/chebi_with_inchikey_source_classyfire.csv"
   )
   
@@ -482,7 +483,7 @@ run_phylometab_analysis <- function() {
   
   # 5. Save final output
   cat("Saving phylogenetic metabolomics plot...\n")
-  ggsave(file.path(OUTPUT_DIR, "FIG_6_phylomet.pdf"), phylometab_heatmap, width = 10, height = 10)
+  ggsave(file.path(OUTPUT_DIR, "FIG_7_phylomet.pdf"), phylometab_heatmap, width = 10, height = 10)
   
   # 6. Analysis summary
   end_time <- Sys.time()
