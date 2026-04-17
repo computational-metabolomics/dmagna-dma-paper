@@ -1,4 +1,4 @@
-# DMA of *D. magna* - Paper - Data Analysis Code
+# DMA of *D. magna* - Paper - Data analysis code and data
 
 This repository provides a comprehensive set of R analysis code, supporting source data, and result files for the data-analysis summaries and figures in the Deep Metabolome Annotation (DMA) of *Daphnia magna* paper. Where complete figure-generation workflows are not included, the numerical input/source data are provided to support transparency and reuse.
 
