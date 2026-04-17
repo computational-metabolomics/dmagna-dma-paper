@@ -6,12 +6,12 @@ This repository provides a comprehensive set of R analysis code, supporting sour
 
 The repository provides analysis outputs and supporting files for the DMA of *D. magna* paper:
 
-1. **Daphnia annotation summary** - Analysis of metabolite annotations from *D. magna* samples
-2. **Metabolite reference standards analysis summary** - Analysis of metabolite standard mixture (MSM) data
-3. **Phylo analysis** - Phylogenetic/metabolomics analysis across species
-4. **Molecular network files** - Files used to generate molecular network figures
-5. **IPA analysis** - IPA pathway results used to generate Supplemental Figure S32
-6. **LC-MS optimisation analysis** - Numerical input/source data used to generate Supplemental Figures S9-S26
+1. **Daphnia annotation summary** - R code and data for analysis of metabolite annotations from *D. magna* samples
+2. **Metabolite reference standards analysis summary** - R code and data for analysis of metabolite standard mixture (MSM) data
+3. **Phylo analysis** - R code and data for phylogenetic/metabolomics analysis across species
+4. **Molecular network files** - Network/graph files used to generate molecular network figures
+5. **IPA analysis** - IPA pathway results used to generate summary values and supplementary figure
+6. **LC-MS optimisation analysis** - Numerical input/source data used to generate LC-MS optimisation analyis supplementary figures
 7. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
 ## Figures covered 
@@ -20,7 +20,7 @@ This repository provides the numerical data (and relevant code where highlighted
 
 **Main Figures:**
 - Figure 5 (`FIG_5a_tree_map.pdf`, `FIG_5b_annotations_all_pca.pdf`, `FIG_5c_annotations_all_superclass_bar.pdf`, `FIG_5d_annotations_all_class_bar.pdf`, `FIG_5e_annotations_all_subclass_bar.pdf`): Metabolite annotation overview (tree map, PCA, classification bars)
-- Figure 6 (`FIG_6a_extraction_venn.pdf`, `FIG_6b_chromatography_type_venn.pdf`, `FIG_6c_polarity_venn.pdf`, `FIG_6d_annotations_all_workflow_bar.pdf`, `FIG_6e_annotations_all_upset.pdf`): Workflow and method comparisons (Venn diagrams, upset plots)
+- Figure 6 (`FIG_6a_extraction_venn.pdf`, `FIG_6b_chromatography_type_venn.pdf`, `FIG_6c_polarity_venn.pdf`, `FIG_6d_annotations_all_workflow_bar.pdf`, `FIG_6e_annotations_all_upset.pdf`): Workflow and method comparisons (Venn diagrams, workflow bars, upset plots)
 - Figure 7 (`FIG_7_phylomet.pdf`): Phylogenetic metabolomics analysis
 - Figure 8: Molecular network analysis (negative ionisation; source files in `network_files/`)
 
