@@ -14,6 +14,18 @@ The repository provides analysis outputs and supporting files for the DMA of *D.
 6. **LC-MS optimisation analysis** - Numerical input/source data used to generate LC-MS optimisation analyis supplementary figures
 7. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
+## Input and Output Coverage
+
+To clarify what is provided in this repository:
+
+- **Input/source data provided:** `input/`, `resources/LC-MS_optimisation_analysis/`, `resources/network_files/`, `resources/IPA_analysis/`
+- **Code provided:** `paper_summarise_daphnia.R`, `paper_summarise_msm.R`, `paper_phylometab.R`, `example_feature_check.R`
+- **Generated output files included:** selected outputs in `output/` (for example Figure 5-7 PDFs and Figures S27-S31 PDFs, plus summary tables)
+- **Source-only (no figure-rendered output included in this repo):**
+	- Figures S9-S26 (numerical source data in `resources/LC-MS_optimisation_analysis/`)
+	- Figure S32 (IPA source file in `resources/IPA_analysis/`)
+	- Figures 8 and S33 (molecular network source files in `resources/network_files/`)
+
 ## Figures covered 
 
 This repository provides the numerical data (and relevant code where highlighted) used to generate the following figures:
@@ -22,10 +34,10 @@ This repository provides the numerical data (and relevant code where highlighted
 - Figure 5 (`FIG_5a_tree_map.pdf`, `FIG_5b_annotations_all_pca.pdf`, `FIG_5c_annotations_all_superclass_bar.pdf`, `FIG_5d_annotations_all_class_bar.pdf`, `FIG_5e_annotations_all_subclass_bar.pdf`): Metabolite annotation overview (tree map, PCA, classification bars)
 - Figure 6 (`FIG_6a_extraction_venn.pdf`, `FIG_6b_chromatography_type_venn.pdf`, `FIG_6c_polarity_venn.pdf`, `FIG_6d_annotations_all_workflow_bar.pdf`, `FIG_6e_annotations_all_upset.pdf`): Workflow and method comparisons (Venn diagrams, workflow bars, upset plots)
 - Figure 7 (`FIG_7_phylomet.pdf`): Phylogenetic metabolomics analysis
-- Figure 8: Molecular network analysis (negative ionisation; source files in `network_files/`)
+- Figure 8: Molecular network analysis (negative ionisation; source files in `resources/network_files/`)
 
 **Supplementary Figures:**
-- Figures S9-S26: LC-MS optimisation analysis (numerical input/source data only in `LC-MS_optimisation_analysis/`; figure-generation code is not included)
+- Figures S9-S26: LC-MS optimisation analysis (numerical input/source data only in `resources/LC-MS_optimisation_analysis/`; figure-generation code is not included)
 - Figure S27 (`FIG_S27_dims_lcms_venn.pdf`): DIMS vs LC-MS derived annotation Venn diagram
 - Figure S28a (`FIG_S28a_annotation_type_venn.pdf`): Venn diagram of annotation computational approaches
 - Figure S28b (`FIG_S28b_spectral_matching_venn.pdf`): Venn diagram of spectral matching approaches
@@ -33,8 +45,8 @@ This repository provides the numerical data (and relevant code where highlighted
 - Figure S30a (`FIG_S30a_galaxy_msms_workflow_bar.pdf`): MSM workflow analysis
 - Figure S30b (`FIG_S30b_treemap_msm.pdf`): MSM tree map
 - Figure S31 (`FIG_S31_presence_absence_match_type_msm.pdf`): MSM presence/absence and match-type analysis
-- Figure S32 (`IPA_analysis/DMA_IPA_output_pathways.xls`): IPA pathway analysis source file
-- Figure S33: Molecular network analysis (source files in `network_files/`)
+- Figure S32 (`resources/IPA_analysis/DMA_IPA_output_pathways.xls`): IPA pathway analysis source file
+- Figure S33: Molecular network analysis (source files in `resources/network_files/`)
 
 
 ## Project Structure
@@ -54,10 +66,11 @@ This repository provides the numerical data (and relevant code where highlighted
 │       ├── MTox.csv
 │       ├── phyloT_generated_tree_1734701763_newick.txt
 │       └── pubchem_kegg_hmdb_expanded.zip
-├── IPA_analysis/                         # IPA source data for Supplemental Figure S32
-│   └── DMA_IPA_output_pathways.xls
-├── LC-MS_optimisation_analysis/          # Numerical input/source data for Supplemental Figures S9-S26 (no figure-generation code)
-├── network_files/                        # Files used for molecular network figures
+├── resources/
+│   ├── IPA_analysis/                     # IPA source data for Supplemental Figure S32
+│   │   └── DMA_IPA_output_pathways.xls
+│   ├── LC-MS_optimisation_analysis/      # Numerical input/source data for Supplemental Figures S9-S26 (no figure-generation code)
+│   └── network_files/                    # Files used for molecular network figures
 ├── output/                               # Generated figures and summary tables
 ├── example_feature_check.R               # Galaxy workflow feature check example
 ├── paper_summarise_daphnia.R             # Main Daphnia annotation analysis
@@ -181,13 +194,24 @@ The analysis relies on several R packages:
 
 ## Output Files
 
-All generated figures are saved as PDF files in the `output/` directory. Summary tables are saved as CSV files for further analysis or inclusion in manuscripts.
+Selected generated figures are provided as PDF files in `output/`, and summary tables are provided as CSV files.
+
+For some analyses, this repository provides source/input data rather than rendered figure files (see "Input and Output Coverage" above).
 
 Also includes an updated metabolites file created for the MetaboLights study MTBLS2273.
 
 ## License
 
-See LICENSE file for details.
+Unless otherwise stated below, the contents of this repository is licensed under GPLv3.
+
+Author-created data in the following directories are released under CC0-1.0:
+- `./input`
+- `./resources/LC-MS_optimisation_analysis`
+- `./resources/network_files`
+
+IPA-derived outputs are included for transparency and remain subject to QIAGEN's license terms.
+
+See `LICENSE` for repository-level license details.
 
 ## Citation
 
