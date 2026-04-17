@@ -2,17 +2,7 @@
 
 This repository provides a comprehensive set of R analysis code, supporting source data, and result files for the data-analysis summaries and figures in the Deep Metabolome Annotation (DMA) of *Daphnia magna* paper. Where complete figure-generation workflows are not included, the numerical input/source data are provided to support transparency and reuse.
 
-## Overview
 
-The repository provides analysis outputs and supporting files for the DMA of *D. magna* paper:
-
-1. **Daphnia annotation summary** - R code and data for analysis of metabolite annotations from *D. magna* samples
-2. **Metabolite reference standards analysis summary** - R code and data for analysis of metabolite standard mixture (MSM) data
-3. **Phylo analysis** - R code and data for phylogenetic/metabolomics analysis across species
-4. **Molecular network files** - Network/graph files used to generate molecular network figures
-5. **IPA analysis** - IPA pathway results used to generate summary values and supplementary figure
-6. **LC-MS optimisation analysis** - Numerical input/source data used to generate LC-MS optimisation analyis supplementary figures
-7. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
 ## License
 
@@ -25,7 +15,17 @@ Author-created data in the following directories are released under CC0-1.0:
 
 IPA-derived outputs `./resources/IPA_analysis` are included for transparency and remain subject to QIAGEN's license terms.
 
-See `LICENSE` for repository-level license details.
+## Overview
+
+The repository provides analysis outputs and supporting files for the DMA of *D. magna* paper:
+
+1. **Daphnia annotation summary** - R code and data for analysis of metabolite annotations from *D. magna* samples
+2. **Metabolite reference standards analysis summary** - R code and data for analysis of metabolite standard mixture (MSM) data
+3. **Phylo analysis** - R code and data for phylogenetic/metabolomics analysis across species
+4. **Molecular network files** - Network/graph files used to generate molecular network figures
+5. **IPA analysis** - IPA pathway results used to generate summary values and supplementary figure
+6. **LC-MS optimisation analysis** - Numerical input/source data used to generate LC-MS optimisation analyis supplementary figures
+7. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
 ## What is in the repo?
 
