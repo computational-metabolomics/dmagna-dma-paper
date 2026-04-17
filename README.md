@@ -14,7 +14,7 @@ The repository provides analysis outputs and supporting files for the DMA of *D.
 6. **LC-MS optimisation analysis** - Numerical input/source data used to generate LC-MS optimisation analyis supplementary figures
 7. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
-## Input and Output Coverage
+## What is in the repo?
 
 To clarify what is provided in this repository:
 
@@ -49,7 +49,7 @@ This repository provides the numerical data (and relevant code where highlighted
 - Figure S33: Molecular network analysis (source files in `resources/network_files/`)
 
 
-## Project Structure
+## Project structure
 
 ```
 ├── input/
@@ -84,7 +84,7 @@ This repository provides the numerical data (and relevant code where highlighted
 - RStudio (recommended)
 - Required R packages are managed via `renv` (see Installation section)
 
-## Installation
+## R Installation
 
 1. Clone this repository
 2. Open the R project in RStudio: `dmagna-dma-paper.Rproj`
