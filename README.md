@@ -96,7 +96,7 @@ renv::init()
 
 This will install all required packages with their exact versions as specified in `renv.lock`.
 
-## Usage
+## R code usage
 
 ### 1. Daphnia Annotation Analysis
 
@@ -192,13 +192,13 @@ The analysis relies on several R packages:
 - **Phylogenetics:** `ape`, `ggtree`, `aplot`
 - **Data import:** `openxlsx`, `jsonlite`
 
-## Output Files
+## R code analysis output files
 
 Selected generated figures are provided as PDF files in `output/`, and summary tables are provided as CSV files.
 
 For some analyses, this repository provides source/input data rather than rendered figure files (see "Input and Output Coverage" above).
 
-Also includes an updated metabolites file created for the MetaboLights study MTBLS2273.
+Also includes the metabolites file created for the MetaboLights study MTBLS2273.
 
 ## License
 
@@ -209,7 +209,7 @@ Author-created data in the following directories are released under CC0-1.0:
 - `./resources/LC-MS_optimisation_analysis`
 - `./resources/network_files`
 
-IPA-derived outputs are included for transparency and remain subject to QIAGEN's license terms.
+IPA-derived outputs `./resources/IPA_analysis` are included for transparency and remain subject to QIAGEN's license terms.
 
 See `LICENSE` for repository-level license details.
 
