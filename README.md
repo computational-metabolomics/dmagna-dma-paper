@@ -14,6 +14,19 @@ The repository provides analysis outputs and supporting files for the DMA of *D.
 6. **LC-MS optimisation analysis** - Numerical input/source data used to generate LC-MS optimisation analyis supplementary figures
 7. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
+## License
+
+Unless otherwise stated below, the contents of this repository is licensed under GPLv3.
+
+Author-created data in the following directories are released under CC0-1.0:
+- `./input`
+- `./resources/LC-MS_optimisation_analysis`
+- `./resources/network_files`
+
+IPA-derived outputs `./resources/IPA_analysis` are included for transparency and remain subject to QIAGEN's license terms.
+
+See `LICENSE` for repository-level license details.
+
 ## What is in the repo?
 
 To clarify what is provided in this repository:
@@ -200,18 +213,7 @@ For some analyses, this repository provides source/input data rather than render
 
 Also includes the metabolites file created for the MetaboLights study MTBLS2273.
 
-## License
 
-Unless otherwise stated below, the contents of this repository is licensed under GPLv3.
-
-Author-created data in the following directories are released under CC0-1.0:
-- `./input`
-- `./resources/LC-MS_optimisation_analysis`
-- `./resources/network_files`
-
-IPA-derived outputs `./resources/IPA_analysis` are included for transparency and remain subject to QIAGEN's license terms.
-
-See `LICENSE` for repository-level license details.
 
 ## Citation
 
