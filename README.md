@@ -89,13 +89,16 @@ This repository provides the numerical data (and relevant code where highlighted
 └── paper_phylometab.R                    # Phylometab metabolomics analysis
 ```
 
-## Requirements for R analysis
+
+## R code analysis
+
+### Requirements for R analysis
 
 - R (>= 4.4.3)
 - RStudio (recommended)
 - Required R packages are managed via `renv` (see Installation section)
 
-## R Installation
+### R Installation
 
 1. Clone this repository
 2. Open the R project in RStudio: `dmagna-dma-paper.Rproj`
@@ -107,7 +110,6 @@ renv::init()
 
 This will install all required packages with their exact versions as specified in `renv.lock`.
 
-## R code usage
 
 ### 1. Daphnia Annotation Analysis
 
