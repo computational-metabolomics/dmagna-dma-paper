@@ -27,9 +27,7 @@ The repository provides analysis outputs and supporting files for the DMA of *D.
 6. **LC-MS optimisation analysis** - Numerical input/source data used to generate LC-MS optimisation analyis supplementary figures
 7. **Example Feature Check (Galaxy workflow history access)** - Example for how the Galaxy workflow histories can be investigated
 
-## What is in the repo?
-
-To clarify what is provided in this repository:
+To clarify what is provided in this repository to cover the above:
 
 - **Input/source data provided:** `input/`, `resources/LC-MS_optimisation_analysis/`, `resources/network_files/`, `resources/IPA_analysis/`
 - **Code provided:** `paper_summarise_daphnia.R`, `paper_summarise_msm.R`, `paper_phylometab.R`, `example_feature_check.R`
