@@ -1,4 +1,4 @@
-# DMA of *D. magna* - Paper - Data analysis code and data
+# DMA of *D. magna* - Paper - Data analysis details for figures and summaries
 
 This repository provides a comprehensive set of R analysis code, supporting source data, and result files for the data-analysis summaries and figures in the Deep Metabolome Annotation (DMA) of *Daphnia magna* paper. Where complete figure-generation workflows are not included, the numerical input/source data are provided to support transparency and reuse.
 
@@ -213,7 +213,13 @@ For some analyses, this repository provides source/input data rather than render
 
 Also includes the metabolites file created for the MetaboLights study MTBLS2273.
 
+## Other relevant repositories and links
 
+* DMAdb - https://dmadb.bham.ac.uk/
+* DMAdb documentation - https://dmadb.readthedocs.io/en/latest/getting-started.html
+* DMA Galaxy site - including Galaxy histories and Galaxy workflows used https://dma.galaxy.bham.ac.uk
+
+* Summary of Galaxy worklows used for the DMA of D. magna https://github.com/computational-metabolomics/dmagna-dma-galaxy-workflows
 
 ## Citation
 
