@@ -193,7 +193,7 @@ source("example_feature_check.R")
 - `*_DE_blank_filtered.RDS` and `*_blank_filtered_peak_matrix.csv`
 - `*_xcms_passed_annos.csv`
 
-## Key Dependencies
+### R code Key Dependencies
 
 The analysis relies on several R packages:
 
@@ -203,7 +203,7 @@ The analysis relies on several R packages:
 - **Phylogenetics:** `ape`, `ggtree`, `aplot`
 - **Data import:** `openxlsx`, `jsonlite`
 
-## R code analysis output files
+### R code analysis output files
 
 Selected generated figures are provided as PDF files in `output/`, and summary tables are provided as CSV files.
 
