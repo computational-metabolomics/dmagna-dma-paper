@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<parameters>
+<parameter name="DEREPLICATOR_TASK">e7881d5cc9b548a298b617609d32ba0a</parameter>
+<parameter name="GNPS_TASK">6bb9ecf889174847a269dba78868f064</parameter>
+<parameter name="MS2LDA_TASK">f743b92a9aae464b802115e76a8c1c44</parameter>
+<parameter name="NAP_TASK">None</parameter>
+<parameter name="VARQUEST_TASK">None</parameter>
+<parameter name="desc">Molnetenhancer of Classic Molecular Networking 6bb9ecf889174847a269dba78868f064 DMA negative 2025 v2</parameter>
+<parameter name="email">t.n.lawson@bham.ac.uk t.n.lawson@bham.ac.uk</parameter>
+<parameter name="task">d94e6ec3017f46d9a4462cee14d5bfd4</parameter>
+<parameter name="user">tomnl</parameter>
+<parameter name="uuid">1E7E1C4F-5A80-0001-F44B-A040E9EFB7C0</parameter>
+<parameter name="workflow">MOLNETENHANCER</parameter>
+<parameter name="workflow_version">release_22</parameter>
+</parameters>
